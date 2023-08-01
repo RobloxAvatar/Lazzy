@@ -14,7 +14,11 @@ wait(1)
 
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-57.911137, 362.33728, -0.93506506, -0.0174594577, 6.0804024e-09, 0.999847591, 7.86445256e-08, 1, -7.45462891e-09, -0.999847591, -7.876268888e-08, -0.0174594577)
 
-wait(1.5)
+wait(2)
+
+game.ReplicatedStorage.ReverseAbility:FireServer()
+
+wait(0.5)
 
 local ohInstance1 = workspace[_G.Target].HumanoidRootPart
 
