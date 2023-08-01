@@ -1,4 +1,4 @@
-game:GetService("UserInputService").InputBegan(i,istyping)
+game:GetService("UserInputService").InputBegan:Connect(function(i,istyping)
     if istyping == true then return end
     if i.KeyCode == Enum.KeyCode.LeftAlt then
         if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value ~= "Reverse" then return end
