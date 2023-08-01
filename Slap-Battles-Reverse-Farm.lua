@@ -12,9 +12,9 @@ repeat wait() until game.Players[_G.Target].Character:FindFirstChild("entered")
 
 wait(1)
 
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-57.911137, 362.33728, -0.93506506, -0.0174594577, 6.0804024e-09, 0.999847591, 7.86445256e-08, 1, -7.45462891e-09, -0.999847591, -7.876268888e-08, -0.0174594577)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(234.469391, -15.7160769, 15.0752077, -0.106970124, 4.20225881e-08, 0.994262218, -2.34862387e-08, 1, -4.47919213e-08, -0.994262218, -2.81428765e-08, -0.106970124)
 
-wait(2)
+wait(0.5)
 
 game.ReplicatedStorage.ReverseAbility:FireServer()
 
