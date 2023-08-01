@@ -1,5 +1,3 @@
---//Bypassing Anti Cheat
-
 local gmt = getrawmetatable(game)
 setreadonly(gmt, false)
 local oldNamecall = gmt.__namecall
@@ -165,6 +163,7 @@ MainTab:Bind("Kill Aura", Enum.KeyCode.G, function()
                                                                                         local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
                                                                                         game:GetService("ReplicatedStorage").nightmarehit:FireServer(ohInstance1)
                                                                                     end
+                                                                                else
                                                                                     if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Glitch" then
                                                                                         for i,v in pairs(game:GetService("Players"):GetChildren()) do
                                                                                             local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
