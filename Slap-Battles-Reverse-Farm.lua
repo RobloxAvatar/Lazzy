@@ -1,5 +1,4 @@
-game:GetService("UserInputService").InputBegan:Connect(function(i,istyping)
-    if istyping == true then return end
+game:GetService("UserInputService").InputBegan:Connect(function(i)
     if i.KeyCode == Enum.KeyCode.LeftAlt then
         if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value ~= "Reverse" then return end
         repeat task.wait() until game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
