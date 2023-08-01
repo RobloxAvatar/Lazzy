@@ -9,6 +9,8 @@ game:GetService("UserInputService").InputBegan:Connect(function(i,istyping)
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Lobby.Teleport1, 1)
         end
 
+        repeat task.wait() until game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        repeat task.wait() until game.Players[_G.Target].Character ~= nil and game.Players[_G.Target].Character:FindFirstChild("HumanoidRootPart")
         repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("entered")
         repeat wait() until game.Players[_G.Target].Character:FindFirstChild("entered")
 
