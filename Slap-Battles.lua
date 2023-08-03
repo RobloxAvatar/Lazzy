@@ -199,6 +199,13 @@ MainTab:Bind("Kill Aura", Enum.KeyCode.G, function()
                                                                                                                 local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
                                                                                                                 game:GetService("ReplicatedStorage").GeneralHit:FireServer(ohInstance1)
                                                                                                             end
+                                                                                                        else
+                                                                                                            if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "The Flex" then
+                                                                                                                for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                                                                                                    local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
+                                                                                                                    game:GetService("ReplicatedStorage").FlexHit:FireServer(ohInstance1)
+                                                                                                                end
+                                                                                                            end
                                                                                                         end
                                                                                                     end
                                                                                                 end
