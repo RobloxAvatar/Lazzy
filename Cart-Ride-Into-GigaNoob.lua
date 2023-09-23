@@ -51,7 +51,38 @@ local function moveToVoid()
     end
 end
 
+local function getClosestCart()
+    for i,v in pairs(workspace:GetDescendants()) do
+        for i2,v2 in pairs(v:GetChildren()) do
+            if v2:FindFirstChild("Engine") then
+                local magnitudeBetweenPos = (v2:FindFirstChild("Engine").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                local distance = 3
+                if magnitudeBetweenPos <= distance then
+                    return v2
+                end
+            end
+        end
+    end
+end
+
 local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/rayfield.lua"))()
+
+local function notify(title, content, duration)
+    Rayfield:Notify({
+        Title = title,
+        Content = content,
+        Duration = duration,
+        Image = 4483362458,
+        Actions = {
+            Ignore = {
+            Name = "Okay!",
+            Callback = function()
+                print("Notfied!")
+            end
+            },
+        },
+    })
+end
 
 local Window = Rayfield:CreateWindow({
    Name = "Lazzy",
@@ -129,6 +160,20 @@ local CarClear = Main:CreateToggle({
    Flag = "ClearCars",
    Callback = function(Value)
         getgenv().clearCars = Value
+   end,
+})
+
+local Button = Main:CreateButton({
+   Name = "Complete Cart Ride",
+   Callback = function()
+        if getClosestCart() == nil or getClosestCart() == "" then
+            notify("Lazzy", "No Cart Nearby!", 3)
+        else
+            if getClosestCart() then
+                getClosestCart():PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 5, 0))
+                notify("Lazzy", "Completed Cart Ride!", 1.5)
+            end
+        end
    end,
 })
 
