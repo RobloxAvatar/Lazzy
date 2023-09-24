@@ -130,6 +130,52 @@ local function unfling()
     end
 end
 
+local function killPlayer(target)
+    if game.Players[target].Character.Humanoid.Sit == true then return end
+    repeat
+        wait()
+        if not v.Backpack:FindFirstChild("Rickshaw") or v.Character:FindFirstChild("Rickshaw") then 
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+        end
+        for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+                game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+            end
+        end
+        local dot = game.Players[target].Character.Head.CFrame.LookVector:Dot(game.Players.LocalPlayer.Character.Head.CFrame.LookVector)
+        if (dot > 0.5) then
+            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, 3))
+        else
+            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -3))
+        end
+    until game.Players[target].Character.Humanoid.Sit == true
+    repeat wait() until game.Players[target].Character.Humanoid.Sit == true or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    game.Players.LocalPlayer.Character:PivotTo(CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
+end
+
+local function winPlayer(target)
+    if game.Players[target].Character.Humanoid.Sit == true then return end
+    repeat
+        wait()
+        if not v.Backpack:FindFirstChild("Rickshaw") or v.Character:FindFirstChild("Rickshaw") then 
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+        end
+        for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+                game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+            end
+        end
+        local dot = game.Players[target].Character.Head.CFrame.LookVector:Dot(game.Players.LocalPlayer.Character.Head.CFrame.LookVector)
+        if (dot > 0.5) then
+            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, 3))
+        else
+            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -3))
+        end
+    until game.Players[target].Character.Humanoid.Sit == true
+    repeat wait() until game.Players[target].Character.Humanoid.Sit == true or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
+end
+
 local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/Arrayfield.lua"))()
 
 local function notify(title, content, duration)
@@ -285,6 +331,28 @@ local TeleportToPlayer = Players:CreateButton({
         else
             notify("Lazzy", "Going to selected player!", 3)
             game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(3.5), {CFrame = game.Players[getgenv().selectedPlayer].Character.HumanoidRootPart.CFrame}):Play()
+        end
+   end,
+})
+
+local KillPlayer = Players:CreateButton({
+   Name = "Kill Player",
+   Callback = function()
+        if getgenv().selectedPlayer == nil or getgenv().selectedPlayer == "" then
+            notify("Lazzy", "No player selected!", 3)
+        else
+            killPlayer(getgenv().selectedPlayer)
+        end
+   end,
+})
+
+local WinPlayer = Players:CreateButton({
+   Name = "Win Player",
+   Callback = function()
+        if getgenv().selectedPlayer == nil or getgenv().selectedPlayer == "" then
+            notify("Lazzy", "No player selected!", 3)
+        else
+            winPlayer(getgenv().selectedPlayer)
         end
    end,
 })
