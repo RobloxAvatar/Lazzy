@@ -262,6 +262,8 @@ local SpectateToggle = Players:CreateToggle({
    end,
 })
 
+local oldpos
+
 local FlingToggle = Players:CreateToggle({
    Name = "Fling",
    CurrentValue = false,
