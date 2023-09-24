@@ -293,6 +293,7 @@ local CompleteCartRideButton = Main:CreateButton({
    Name = "Complete Cart Ride",
    Callback = function()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0)
+        notify("Lazzy", "Completed Cart Ride!", 3)
    end,
 })
 
