@@ -1,3 +1,11 @@
+local players = {}
+
+for _,v in pairs(game.Players:GetPlayers()) do
+    if v.Name ~= game.Players.LocalPlayer.Name then
+        table.insert(players, v.Name)
+    end
+end
+
 local function upSpeed()
     for i,v in pairs(game:GetService("Workspace").Building.Baseplate["Carts + Jeeps"]:GetChildren()) do
         for i2, v2 in pairs(v:GetChildren()) do
@@ -65,7 +73,7 @@ local function getClosestCart()
     end
 end
 
-local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/rayfield.lua"))()
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/Arrayfield.lua"))()
 
 local function notify(title, content, duration)
     Rayfield:Notify({
@@ -117,6 +125,7 @@ getgenv().downSpeed = false
 getgenv().onCarts = false
 getgenv().offCarts = false
 getgenv().clearCars = false
+getgenv().selectedPlayer = ""
 
 local upSpeedToggle = Main:CreateToggle({
    Name = "Up Speed",
@@ -163,17 +172,40 @@ local CarClear = Main:CreateToggle({
    end,
 })
 
-local Button = Main:CreateButton({
+local Playerdropdown = Main:CreateDropdown({
+   Name = "Players",
+   Options = players,
+   CurrentOption = players[1],
+   MultipleOptions = false,
+   Flag = "Playerdropdown",
+   Callback = function(plr)
+        getgenv().selectedPlayer = plr
+        if type(getgenv().selectedPlayer) == "table" then
+            for i,v in pairs(plr) do
+                getgenv().selectedPlayer = v
+            end
+        else
+            getgenv().selectedPlayer = plr
+        end
+   end,
+})
+
+local CompleteCartRideButton = Main:CreateButton({
+   Name = "Teleport To Player",
+   Callback = function()
+        if getgenv().selectedPlayer == nil or getgenv().selectedPlayer == "" then
+            notify("Lazzy", "No player selected!", 3)
+        else
+            notify("Lazzy", "Going to selected player!", 3)
+            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(3.5), {CFrame = game.Players[getgenv().selectedPlayer].Character.HumanoidRootPart.CFrame}):Play()
+        end
+   end,
+})
+
+local CompleteCartRideButton = Main:CreateButton({
    Name = "Complete Cart Ride",
    Callback = function()
-        if getClosestCart() == nil or getClosestCart() == "" then
-            notify("Lazzy", "No Cart Nearby!", 3)
-        else
-            if getClosestCart() then
-                getClosestCart():PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 5, 0))
-                notify("Lazzy", "Completed Cart Ride!", 1.5)
-            end
-        end
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0)
    end,
 })
 
@@ -225,4 +257,14 @@ spawn(function()
             end)
         end
     end
+end)
+
+game.Players.PlayerAdded:Connect(function(plr)
+    table.insert(players, plr.Name)
+    Playerdropdown:Add(plr.Name)
+end)
+
+game.Players.PlayerRemoving:Connect(function(plr)
+    table.remove(players, table.find(players, plr.Name))
+    Playerdropdown:Remove(plr.Name)
 end)
