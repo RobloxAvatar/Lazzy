@@ -111,6 +111,25 @@ local function giveAllTools()
     end
 end
 
+local function fling(target)
+    local Thrust = Instance.new('BodyThrust', game.Players.LocalPlayer.Character.HumanoidRootPart)
+	Thrust.Force = Vector3.new(9999,9999,9999)
+	Thrust.Name = "YeetForce"
+    repeat
+	    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame
+	    Thrust.Location = target.Character.HumanoidRootPart.Position
+	    game:FindService("RunService").Heartbeat:wait()
+    until not target.Character:FindFirstChild("Head") or not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyThrust")
+end
+
+local function unfling()
+    for _,v in pairs(game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+        if v:FindFirstChildOfClass("BodyThrust") then
+            v:FindFirstChildOfClass("BodyThrust"):Destroy()
+        end 
+    end
+end
+
 local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/Arrayfield.lua"))()
 
 local function notify(title, content, duration)
@@ -238,6 +257,21 @@ local Spectate = Main:CreateToggle({
             workspace.CurrentCamera.CameraSubject = game.Players[getgenv().selectedPlayer].Character
         else
             workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character
+        end
+   end,
+})
+
+local Spectate = Main:CreateToggle({
+   Name = "Spectate",
+   CurrentValue = false,
+   Flag = "Spectate",
+   Callback = function(Value)
+        if Value then
+            oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            fling(game.Players[getgenv().selectedPlayer])
+        else
+            unfling()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
         end
    end,
 })
