@@ -134,7 +134,7 @@ local function killPlayer(target)
     if game.Players[target].Character.Humanoid.Sit == true then return end
     repeat
         wait()
-        if not v.Backpack:FindFirstChild("Rickshaw") or v.Character:FindFirstChild("Rickshaw") then 
+        if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
         end
         for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -154,10 +154,9 @@ local function killPlayer(target)
 end
 
 local function winPlayer(target)
-    if game.Players[target].Character.Humanoid.Sit == true then return end
     repeat
         wait()
-        if not v.Backpack:FindFirstChild("Rickshaw") or v.Character:FindFirstChild("Rickshaw") then 
+        if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
         end
         for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -172,7 +171,7 @@ local function winPlayer(target)
             game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(0, 0, -3))
         end
     until game.Players[target].Character.Humanoid.Sit == true
-    repeat wait() until game.Players[target].Character.Humanoid.Sit == true or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    repeat wait() until game.Players[target].Team == "Winners!"
     game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
 end
 
