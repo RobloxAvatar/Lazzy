@@ -101,6 +101,16 @@ local function getClosestCart()
     end
 end
 
+local function giveAllTools()
+    for i,v in pairs(game:GetService("Workspace").Building.Winners.Givers_Winners:GetChildren()) do
+        for i2,v2 in pairs(v:GetChildren()) do
+            if v2.Parent:FindFirstChild("Giver") then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Giver, 0)
+            end
+        end
+    end
+end
+
 local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/Arrayfield.lua"))()
 
 local function notify(title, content, duration)
@@ -234,6 +244,13 @@ local CompleteCartRideButton = Main:CreateButton({
    Name = "Complete Cart Ride",
    Callback = function()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0)
+   end,
+})
+
+local GiveAllToolsButton = Main:CreateButton({
+   Name = "Give All Tools",
+   Callback = function()
+        giveAllTools()
    end,
 })
 
