@@ -14,10 +14,24 @@ local function upSpeed()
             end
         end
     end
+    for i,v in pairs(game:GetService("Workspace").Building.HalfWay.Carts:GetChildren()) do
+        for i2, v2 in pairs(v:GetChildren()) do
+            if v2:FindFirstChild("Up") and v2:FindFirstChild("Up").ClickDetector then
+                fireclickdetector(v2:FindFirstChild("Up").ClickDetector)
+            end
+        end
+    end
 end
 
 local function downSpeed()
     for i,v in pairs(game:GetService("Workspace").Building.Baseplate["Carts + Jeeps"]:GetChildren()) do
+        for i2, v2 in pairs(v:GetChildren()) do
+            if v2:FindFirstChild("Down") and v2:FindFirstChild("Down").ClickDetector then
+                fireclickdetector(v2:FindFirstChild("Down").ClickDetector)
+            end
+        end
+    end
+    for i,v in pairs(game:GetService("Workspace").Building.HalfWay.Carts:GetChildren()) do
         for i2, v2 in pairs(v:GetChildren()) do
             if v2:FindFirstChild("Down") and v2:FindFirstChild("Down").ClickDetector then
                 fireclickdetector(v2:FindFirstChild("Down").ClickDetector)
@@ -34,10 +48,24 @@ local function onCarts()
             end
         end
     end
+    for i,v in pairs(game:GetService("Workspace").Building.HalfWay.Carts:GetChildren()) do
+        for i2, v2 in pairs(v:GetChildren()) do
+            if v2:FindFirstChild("On") and v2:FindFirstChild("On").ClickDetector and v2:FindFirstChild("On").BrickColor == BrickColor.new("Bright red") then
+                fireclickdetector(v2:FindFirstChild("On").ClickDetector)
+            end
+        end
+    end
 end
 
 local function offCarts()
     for i,v in pairs(game:GetService("Workspace").Building.Baseplate["Carts + Jeeps"]:GetChildren()) do
+        for i2, v2 in pairs(v:GetChildren()) do
+            if v2:FindFirstChild("On") and v2:FindFirstChild("On").ClickDetector and v2:FindFirstChild("On").BrickColor == BrickColor.new("Dark green") then
+                fireclickdetector(v2:FindFirstChild("On").ClickDetector)
+            end
+        end
+    end
+    for i,v in pairs(game:GetService("Workspace").Building.HalfWay.Carts:GetChildren()) do
         for i2, v2 in pairs(v:GetChildren()) do
             if v2:FindFirstChild("On") and v2:FindFirstChild("On").ClickDetector and v2:FindFirstChild("On").BrickColor == BrickColor.new("Dark green") then
                 fireclickdetector(v2:FindFirstChild("On").ClickDetector)
