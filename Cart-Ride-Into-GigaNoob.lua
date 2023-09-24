@@ -228,6 +228,20 @@ local Playerdropdown = Main:CreateDropdown({
    end,
 })
 
+local Spectate = Main:CreateToggle({
+   Name = "Spectate",
+   CurrentValue = false,
+   Flag = "Spectate",
+   Callback = function(Value)
+        if Value then
+            if getgenv().selectedPlayer == "" or getgenv().selectedPlayer == nil then return end
+            workspace.CurrentCamera.CameraSubject = game.Players[getgenv().selectedPlayer].Character
+        else
+            workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character
+        end
+   end,
+})
+
 local CompleteCartRideButton = Main:CreateButton({
    Name = "Teleport To Player",
    Callback = function()
