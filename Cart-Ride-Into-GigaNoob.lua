@@ -176,6 +176,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 local Main = Window:CreateTab("Main", 13014546637)
+local Players = Window:CreateTab("Players", 13014546637)
 
 getgenv().upSpeed = false
 getgenv().downSpeed = false
@@ -229,7 +230,7 @@ local CarClear = Main:CreateToggle({
    end,
 })
 
-local Playerdropdown = Main:CreateDropdown({
+local Playerdropdown = Players:CreateDropdown({
    Name = "Players",
    Options = players,
    CurrentOption = players[1],
@@ -247,7 +248,7 @@ local Playerdropdown = Main:CreateDropdown({
    end,
 })
 
-local Spectate = Main:CreateToggle({
+local SpectateToggle = Players:CreateToggle({
    Name = "Spectate",
    CurrentValue = false,
    Flag = "Spectate",
@@ -261,10 +262,10 @@ local Spectate = Main:CreateToggle({
    end,
 })
 
-local Spectate = Main:CreateToggle({
-   Name = "Spectate",
+local FlingToggle = Players:CreateToggle({
+   Name = "Fling",
    CurrentValue = false,
-   Flag = "Spectate",
+   Flag = "Fling",
    Callback = function(Value)
         if Value then
             oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
