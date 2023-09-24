@@ -262,8 +262,6 @@ local SpectateToggle = Players:CreateToggle({
    end,
 })
 
-local oldpos
-
 local FlingToggle = Players:CreateToggle({
    Name = "Fling",
    CurrentValue = false,
@@ -274,7 +272,7 @@ local FlingToggle = Players:CreateToggle({
             fling(game.Players[getgenv().selectedPlayer])
         else
             unfling()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+            game.Players.LocalPlayer.Character:BreakJoints()
         end
    end,
 })
