@@ -277,7 +277,7 @@ local FlingToggle = Players:CreateToggle({
    end,
 })
 
-local CompleteCartRideButton = Main:CreateButton({
+local TeleportToPlayer = Players:CreateButton({
    Name = "Teleport To Player",
    Callback = function()
         if getgenv().selectedPlayer == nil or getgenv().selectedPlayer == "" then
