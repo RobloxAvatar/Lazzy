@@ -1,12 +1,14 @@
 local players = {}
 
 local function getRickshaw()
-    for i,v in pairs(game.Workspace:GetChildren()) do
-        if v.Name == "Rickshaw" and v:FindFirstChildOfClass("ObjectValue") then
-            if not v:FindFirstChild("AttachmentWeld") then return end
-            if v.AttachmentWeld.Part1 == nil then return end
-            if v.AttachmentWeld.Part1.Parent == game.Workspace[game.Players.LocalPlayer.Name] then
-                return v
+    for i,v in pairs(workspace:GetChildren()) do
+        if v.Name == "Rickshaw" then
+            if v:FindFirstChildOfClass("ObjectValue") then
+                if v.Tool.Value ~= nil then
+                    if v.Tool.Value.Parent == game.Workspace[game.Players.LocalPlayer.Name] then
+                        return v
+                    end
+                end
             end
         end
     end
