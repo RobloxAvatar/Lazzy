@@ -149,6 +149,7 @@ local function winPlayer(target)
         game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
     until game.Players[target].Character.Humanoid.Sit == true
     game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
+    game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
 end
 
 local function killPlayer(target)
@@ -176,6 +177,7 @@ local function killPlayer(target)
         game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
     until game.Players[target].Character.Humanoid.Sit == true
     game.Players.LocalPlayer.Character:PivotTo(CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
+    game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
 end
 
 local function followPlayer(target)
