@@ -150,7 +150,7 @@ local function winPlayer(target)
     end
     repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
-        wait(0.1)
+        wait()
         if not game.Players[target] then return end
         if not game.Players[target].Character:FindFirstChild("HumanoidRootPart") then return end
         if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
@@ -189,7 +189,7 @@ local function killPlayer(target)
     end
     repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
-        wait(0.1)
+        wait()
         if not game.Players[target] then return end
         if not game.Players[target].Character:FindFirstChild("HumanoidRootPart") then return end
         if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
