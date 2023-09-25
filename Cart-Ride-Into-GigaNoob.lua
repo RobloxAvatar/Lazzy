@@ -124,27 +124,11 @@ local function unfling()
     end
 end
 
-local function killPlayer(target)
-    if game.Players[target].Character.Humanoid.Sit == true then return end
-    repeat
-        wait()
-        if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
-            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
-        end
-        for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-            if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
-                game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
-            end
-        end
-        game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 9))
-    until game.Players[target].Character.Humanoid.Sit == true
-    repeat wait() until game.Players[target].Character.Humanoid.Sit == true or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    game.Players.LocalPlayer.Character:PivotTo(CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
-end
-
 local function winPlayer(target)
     repeat
-        wait()
+        wait(0.1)
+        if not game.Players[target] then return end
+        if not game.Players[target].Character:FindFirstChild("HumanoidRootPart") then return end
         if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
         end
@@ -153,9 +137,45 @@ local function winPlayer(target)
                 game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
             end
         end
-        game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 9))
+        local head = game.Players[target].Character:WaitForChild("Head")
+        local headPosition = head.Position
+
+        local direction = (game.Players.LocalPlayer.Character.PrimaryPart.Position - headPosition).unit
+
+        local newCharacterPosition = headPosition + direction * -5 
+
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition))
+
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
     until game.Players[target].Character.Humanoid.Sit == true
     game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
+end
+
+local function killPlayer(target)
+    repeat
+        wait(0.1)
+        if not game.Players[target] then return end
+        if not game.Players[target].Character:FindFirstChild("HumanoidRootPart") then return end
+        if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+        end
+        for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+                game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+            end
+        end
+        local head = game.Players[target].Character:WaitForChild("Head")
+        local headPosition = head.Position
+
+        local direction = (game.Players.LocalPlayer.Character.PrimaryPart.Position - headPosition).unit
+
+        local newCharacterPosition = headPosition + direction * -5 
+
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition))
+
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
+    until game.Players[target].Character.Humanoid.Sit == true
+    game.Players.LocalPlayer.Character:PivotTo(CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
 end
 
 local function followPlayer(target)
