@@ -142,7 +142,7 @@ local function winPlayer(target)
     if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
     end
-    wait(0.1)
+    repeat wait() until game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw")
     for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
         if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
@@ -181,7 +181,7 @@ local function killPlayer(target)
     if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
     end
-    wait(0.1)
+    repeat wait() until game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw")
     for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
         if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
