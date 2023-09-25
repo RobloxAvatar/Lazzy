@@ -1,11 +1,5 @@
 local players = {}
 
-for _,v in pairs(game.Players:GetPlayers()) do
-    if v.Name ~= game.Players.LocalPlayer.Name then
-        table.insert(players, v.Name)
-    end
-end
-
 local function upSpeed()
     for i,v in pairs(game:GetService("Workspace").Building.Baseplate["Carts + Jeeps"]:GetChildren()) do
         for i2, v2 in pairs(v:GetChildren()) do
@@ -282,6 +276,12 @@ local CarClear = Main:CreateToggle({
         getgenv().clearCars = Value
    end,
 })
+
+for _,v in pairs(game.Players:GetPlayers()) do
+    if v.Name ~= game.Players.LocalPlayer.Name then
+        table.insert(players, v.Name)
+    end
+end
 
 local Playerdropdown = Players:CreateDropdown({
    Name = "Players",
