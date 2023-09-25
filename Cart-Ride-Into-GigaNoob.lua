@@ -135,6 +135,7 @@ local function unfling()
 end
 
 local function winPlayer(target)
+    repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
         if not game.Players[target] then return end
@@ -164,6 +165,7 @@ local function winPlayer(target)
 end
 
 local function killPlayer(target)
+    repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
         if not game.Players[target] then return end
