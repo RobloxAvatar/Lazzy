@@ -216,6 +216,46 @@ local function killPlayer(target)
     game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
 end
 
+local function halfway(target)
+    pos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+    end
+    repeat wait() until game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw")
+    for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+            game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+        end
+    end
+    repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
+    repeat
+        wait(0.1)
+        if not game.Players[target] then return end
+        if not game.Players[target].Character:FindFirstChild("HumanoidRootPart") then return end
+        if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+        end
+        for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+                game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+            end
+        end
+        local head = game.Players[target].Character:WaitForChild("Head")
+        local headPosition = head.Position
+
+        local direction = (game.Players.LocalPlayer.Character.PrimaryPart.Position - headPosition).unit
+
+        local newCharacterPosition = headPosition + direction * -5 
+
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition))
+
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
+    until getRickshaw().Seat.Occupant ~= nil
+    game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.HalfWay["Yellow Spawn"].CFrame + Vector3.new(0, 2, 0))
+    wait(0.6)
+    game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
+end
+
 local function bring(target)
     pos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
     if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
@@ -465,6 +505,17 @@ local WinPlayer = Players:CreateButton({
             notify("Lazzy", "No player selected!", 3)
         else
             winPlayer(getgenv().selectedPlayer)
+        end
+   end,
+})
+
+local HalfwayPlayer = Players:CreateButton({
+   Name = "Half Way Player",
+   Callback = function()
+        if getgenv().selectedPlayer == nil or getgenv().selectedPlayer == "" then
+            notify("Lazzy", "No player selected!", 3)
+        else
+            halfway(getgenv().selectedPlayer)
         end
    end,
 })
