@@ -169,7 +169,7 @@ local function winPlayer(target)
 end
 
 local function followPlayer(target)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(-2, 0, 0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * -5
 end
 
 local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/Arrayfield.lua"))()
