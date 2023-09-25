@@ -1,5 +1,15 @@
 local players = {}
 
+local function getRickshaw()
+    for i,v in pairs(game.Workspace:GetChildren()) do
+        if v.Name == "Rickshaw" and v:FindFirstChildOfClass("ObjectValue") then
+            if v.AttachmentWeld.Part1.Parent == game.Workspace[game.Players.LocalPlayer.Name] then
+                return v
+            end
+        end
+    end
+end
+
 local function upSpeed()
     for i,v in pairs(game:GetService("Workspace").Building.Baseplate["Carts + Jeeps"]:GetChildren()) do
         for i2, v2 in pairs(v:GetChildren()) do
@@ -147,8 +157,9 @@ local function winPlayer(target)
         game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition))
 
         game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
-    until game.Players[target].Character.Humanoid.Sit == true
+    until getRickshaw().Seat.Occupant ~= nil
     game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
+    wait(0.6)
     game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
 end
 
@@ -175,8 +186,9 @@ local function killPlayer(target)
         game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition))
 
         game.Players.LocalPlayer.Character:PivotTo(CFrame.new(newCharacterPosition, headPosition))
-    until game.Players[target].Character.Humanoid.Sit == true
+    until getRickshaw().Seat.Occupant ~= nil
     game.Players.LocalPlayer.Character:PivotTo(CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
+    wait(0.6)
     game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
 end
 
