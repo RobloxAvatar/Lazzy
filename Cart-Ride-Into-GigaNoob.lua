@@ -135,7 +135,14 @@ local function unfling()
 end
 
 local function winPlayer(target)
-    repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
+    if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+    end
+    for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+            game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+        end
+    end
     repeat
         wait(0.1)
         if not game.Players[target] then return end
@@ -165,6 +172,14 @@ local function winPlayer(target)
 end
 
 local function killPlayer(target)
+    if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
+    end
+    for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
+            game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+        end
+    end
     repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
