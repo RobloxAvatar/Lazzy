@@ -174,6 +174,10 @@ local function winPlayer(target)
     game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
 end
 
+local function followPlayer(target)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(-2, 0, 0)
+end
+
 local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Lazzy/main/Arrayfield.lua"))()
 
 local function notify(title, content, duration)
@@ -302,6 +306,22 @@ local SpectateToggle = Players:CreateToggle({
             workspace.CurrentCamera.CameraSubject = game.Players[getgenv().selectedPlayer].Character
         else
             workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character
+        end
+   end,
+})
+
+local FollowPlayer = Players:CreateToggle({
+   Name = "Follow Player",
+   CurrentValue = false,
+   Flag = "FollowPlayer",
+   Callback = function(Value)
+        if Value then
+            if getgenv().selectedPlayer == "" or getgenv().selectedPlayer == nil then return end
+            repeat wait()
+                followPlayer(getgenv().selectedPlayer)
+            until Value == false
+        else
+            Value = false
         end
    end,
 })
