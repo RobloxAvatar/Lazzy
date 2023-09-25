@@ -3,6 +3,7 @@ local players = {}
 local function getRickshaw()
     for i,v in pairs(game.Workspace:GetChildren()) do
         if v.Name == "Rickshaw" and v:FindFirstChildOfClass("ObjectValue") then
+            if v.AttachmendWeld.Part1 == nil then return end
             if v.AttachmentWeld.Part1.Parent == game.Workspace[game.Players.LocalPlayer.Name] then
                 return v
             end
@@ -143,6 +144,8 @@ local function winPlayer(target)
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
         end
     end
+    wait(0.1)
+    repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
         if not game.Players[target] then return end
@@ -180,6 +183,7 @@ local function killPlayer(target)
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
         end
     end
+    wait(0.1)
     repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
