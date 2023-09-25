@@ -136,12 +136,7 @@ local function killPlayer(target)
                 game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
             end
         end
-        local dot = game.Players[target].Character.Head.CFrame.LookVector:Dot(game.Players.LocalPlayer.Character.Head.CFrame.LookVector)
-        if (dot > 0.5) then
-            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 2)
-        else
-            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 2)
-        end
+        game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 3))
     until game.Players[target].Character.Humanoid.Sit == true
     repeat wait() until game.Players[target].Character.Humanoid.Sit == true or not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     game.Players.LocalPlayer.Character:PivotTo(CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
@@ -158,12 +153,7 @@ local function winPlayer(target)
                 game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
             end
         end
-        local dot = game.Players[target].Character.Head.CFrame.LookVector:Dot(game.Players.LocalPlayer.Character.Head.CFrame.LookVector)
-        if (dot > 0.5) then
-            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 2)
-        else
-            game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 2)
-        end
+        game.Players.LocalPlayer.Character:PivotTo(game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(game.Players[target].Character.HumanoidRootPart.CFrame + game:GetService("Players")[target].Character.HumanoidRootPart.CFrame.lookVector * 3))
     until game.Players[target].Character.Humanoid.Sit == true
     game.Players.LocalPlayer.Character:PivotTo(game:GetService("Workspace").Building.Winners["Red Spawn"].CFrame + Vector3.new(0, 2, 0))
 end
