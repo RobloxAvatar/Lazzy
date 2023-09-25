@@ -232,6 +232,11 @@ getgenv().onCarts = false
 getgenv().offCarts = false
 getgenv().clearCars = false
 getgenv().selectedPlayer = ""
+getgenv().unfollowPlayer = false
+
+local function unFollow()
+    getgenv().unfollowPlayer = true
+end
 
 local upSpeedToggle = Main:CreateToggle({
    Name = "Up Speed",
@@ -317,11 +322,12 @@ local FollowPlayer = Players:CreateToggle({
    Callback = function(Value)
         if Value then
             if getgenv().selectedPlayer == "" or getgenv().selectedPlayer == nil then return end
+            getgenv().unfollowPlayer = false
             repeat wait()
                 followPlayer(getgenv().selectedPlayer)
-            until Value == false
+            until getgenv().unfollowPlayer == true
         else
-            Value = false
+            getgenv().unfollowPlayer = true
         end
    end,
 })
