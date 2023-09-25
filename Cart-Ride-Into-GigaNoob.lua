@@ -3,7 +3,8 @@ local players = {}
 local function getRickshaw()
     for i,v in pairs(game.Workspace:GetChildren()) do
         if v.Name == "Rickshaw" and v:FindFirstChildOfClass("ObjectValue") then
-            if v.AttachmendWeld.Part1 == nil then return end
+            if not v:FindFirstChild("AttachmentWeld") then return end
+            if v.AttachmentWeld.Part1 == nil then return end
             if v.AttachmentWeld.Part1.Parent == game.Workspace[game.Players.LocalPlayer.Name] then
                 return v
             end
@@ -139,12 +140,12 @@ local function winPlayer(target)
     if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
     end
+    wait(0.1)
     for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
         if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
         end
     end
-    wait(0.1)
     repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
@@ -178,12 +179,12 @@ local function killPlayer(target)
     if not game.Players.LocalPlayer.Backpack:FindFirstChild("Rickshaw") or game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") then 
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Building.Winners.Givers_Winners["Rickshaw Giver"].Giver, 0)
     end
+    wait(0.1)
     for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
         if not game.Players.LocalPlayer.Character:FindFirstChild("Rickshaw") and v.Name == "Rickshaw" then
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
         end
     end
-    wait(0.1)
     repeat wait() until getRickshaw() ~= nil and getRickshaw():FindFirstChild("Seat")
     repeat
         wait(0.1)
