@@ -109,14 +109,20 @@ local function collectBarrel()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oilpath.CFrame + Vector3.new(-4, 3, 0)
     repeat wait() until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template"):FindFirstChild("PromptPart")
     local proxprompt = game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template").PromptPart:FindFirstChildOfClass("ProximityPrompt")
-    fireproximityprompt(proxprompt)
+    repeat
+        wait(0.1)
+        fireproximityprompt(proxprompt)
+    until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template"):FindFirstChild("Carrier")
     wait(proxprompt.HoldDuration + 0.5)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials.Flag.Metal.CFrame + Vector3.new(0, -3, 0)
     wait(0.7)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials["Oil Collector"].Collector.DiamondPlate.CFrame + Vector3.new(0, 1, 0)
     if getgenv().autoSell then
         repeat wait() until getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt")
-        fireproximityprompt(getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt"))
+        repeat
+            wait(0.1)
+            fireproximityprompt(getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt"))
+        until not game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template"):FindFirstChild("Carrier")
     end
 end
 
