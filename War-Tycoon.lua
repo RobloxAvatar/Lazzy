@@ -1,5 +1,7 @@
 local teams = {}
 
+getgenv().autoSell = false
+
 local function teleportToFlag(tycoon)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Tycoon.Tycoons[tycoon].Essentials.Flag.Metal.CFrame
 end
@@ -63,7 +65,9 @@ local function stealCrate(tycoon)
         wait(0.7)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials["Oil Collector"].CratePromptPart.CFrame + Vector3.new(0, 1, 0)
         wait(0.2)
-        fireproximityprompt(getTycoon().Essentials["Oil Collector"].CratePromptPart.SellPrompt)
+        if getgenv().autoSell then
+            fireproximityprompt(getTycoon().Essentials["Oil Collector"].CratePromptPart.SellPrompt)
+        end
     end
 end
 
@@ -115,6 +119,15 @@ local Teamdropdown = Main:CreateDropdown({
    end,
 })
 
+local AutoSell = Main:CreateToggle({
+   Name = "Auto Sell",
+   CurrentValue = false,
+   Flag = "AutoSell",
+   Callback = function(Value)
+        getgenv().autoSell = Value
+   end,
+})
+
 local StealCrate = Main:CreateButton({
    Name = "Steal Crate",
    Callback = function()
@@ -122,6 +135,17 @@ local StealCrate = Main:CreateButton({
             notify("Lazzy", "No team selected!", 3)
         else
             stealCrate(getgenv().selectedTeam)
+        end
+   end,
+})
+
+local TeleportToTeamBase = Main:CreateButton({
+   Name = "Teleport To Team",
+   Callback = function()
+        if getgenv().selectedTeam == nil or getgenv().selectedTeam == "" then
+            notify("Lazzy", "No team selected!", 3)
+        else
+            teleportToFlag(getgenv().selectedTeam)
         end
    end,
 })
