@@ -107,7 +107,7 @@ local Teamdropdown = Main:CreateDropdown({
                 getgenv().selectedTeam = v
             end
         else
-            getgenv().selectedTeam = plr
+            getgenv().selectedTeam = team
         end
    end,
 })
