@@ -8,7 +8,9 @@ end
 
 local function getCapturePoint()
     for _,v in pairs(game:GetService("Workspace").Beams:GetChildren()) do
-        return v
+        if string.find("Capture", v.Name) then
+            return v
+        end
     end
 end
 
@@ -64,6 +66,9 @@ local function stealCrate(tycoon)
         notify("Lazzy", "No Parts Found!", 3)
     else
         local helipart = getHeliParts(tycoon)
+        if helipart == nil or helipart == "" then
+            return
+        end
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = helipart.CFrame + Vector3.new(-2, 0, 0)
         wait(0.1)
         fireproximityprompt(helipart.StealPrompt)
