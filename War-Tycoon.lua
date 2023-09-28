@@ -116,7 +116,7 @@ local function collectBarrel()
     repeat
         wait(0.1)
         fireproximityprompt(proxprompt)
-    until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template"):FindFirstChild("Carrier")
+    until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template"):FindFirstChild("Carrier") ~= nil
     wait(proxprompt.HoldDuration + 0.5)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials.Flag.Metal.CFrame + Vector3.new(0, -3, 0)
     wait(0.7)
