@@ -100,8 +100,8 @@ local function collectBarrel()
         notify("Lazzy", "No oil barrel found!", 3)
         return
     end
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oilpath.CFrame
-    repeat wait() until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template")
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oilpath.CFrame + Vector3.new(0, 3, 0)
+    repeat wait() until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template").PromptPart
     local proxprompt = game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template").PromptPart:FindFirstChildOfClass("ProximityPrompt")
     fireproximityprompt(proxprompt)
     wait(proxprompt.HoldDuration + 0.5)
