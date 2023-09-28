@@ -77,7 +77,7 @@ local function stealCrate(tycoon)
         if helipart == nil or helipart == "" then
             return
         end
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = helipart.CFrame + Vector3.new(-2, 0, 0)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = helipart.CFrame + Vector3.new(-4, 2, 0)
         wait(0.1)
         fireproximityprompt(helipart.StealPrompt)
         wait(helipart.StealPrompt.HoldDuration + 0.5)
@@ -100,7 +100,7 @@ local function collectBarrel()
         notify("Lazzy", "No oil barrel found!", 3)
         return
     end
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oilpath.CFrame + Vector3.new(0, 3, 0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oilpath.CFrame + Vector3.new(-4, 3, 0)
     repeat wait() until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template").PromptPart
     local proxprompt = game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template").PromptPart:FindFirstChildOfClass("ProximityPrompt")
     fireproximityprompt(proxprompt)
