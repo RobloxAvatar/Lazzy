@@ -6,6 +6,12 @@ local function teleportToFlag(tycoon)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Tycoon.Tycoons[tycoon].Essentials.Flag.Metal.CFrame
 end
 
+local function getCapturePoint()
+    for _,v in pairs(game:GetService("Workspace").Beams:GetChildren()) do
+        return v
+    end
+end
+
 local function getTycoonOwner(tycoon)
     return game:GetService("Workspace").Tycoon.Tycoons[tycoon].Owner.Value
 end
@@ -136,6 +142,13 @@ local StealCrate = Main:CreateButton({
         else
             stealCrate(getgenv().selectedTeam)
         end
+   end,
+})
+
+local TeleportToCaputrePoint = Main:CreateButton({
+   Name = "Teleport To Capture Point",
+   Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getCapturePoint().CFrame + Vector3.new(0, 2, 0)
    end,
 })
 
