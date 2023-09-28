@@ -109,7 +109,9 @@ local function collectBarrel()
     wait(0.7)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials["Oil Collector"].Collector.DiamondPlate.CFrame + Vector3.new(0, 1, 0)
     if getgenv().autoSell then
-        fireproximityprompt(getTycoon().Essentials["Oil Collector"].Collector.dropPrompt)
+        repeat wait() until getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt")
+        fireproximityprompt(getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt"))
+        game:GetService("Workspace").Tycoon.Tycoons.Romeo.Essentials["Oil Collector"].Collector
     end
 end
 
