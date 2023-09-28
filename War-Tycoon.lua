@@ -59,7 +59,7 @@ end
 
 local function stealCrate(tycoon)
     teleportToFlag(tycoon)
-    wait(0.7)
+    wait(1.1)
     if getHeliParts(tycoon) == nil then
         notify("Lazzy", "No Parts Found!", 3)
     else
