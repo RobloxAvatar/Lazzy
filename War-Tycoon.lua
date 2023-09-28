@@ -1,11 +1,5 @@
 local teams = {}
 
-for _,v in pairs(game:GetService("Workspace").Tycoon.Tycoons:GetChildren()) do
-    if v.Owner.Value ~= game.Players.LocalPlayer then
-        table.insert(players, teams)
-    end
-end
-
 local function teleportToFlag(tycoon)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Tycoon.Tycoons[tycoon].Essentials.Flag.Metal.CFrame
 end
