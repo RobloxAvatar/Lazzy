@@ -79,6 +79,7 @@ local function stealCrate(tycoon)
         end
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = helipart.CFrame + Vector3.new(-4, 3, 0)
         wait(0.1)
+        repeat wait() until helipart:FindFirstChildOfClass("ProximityPrompt")
         fireproximityprompt(helipart.StealPrompt)
         wait(helipart.StealPrompt.HoldDuration + 0.5)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials.Flag.Metal.CFrame + Vector3.new(0, -25, 0)
