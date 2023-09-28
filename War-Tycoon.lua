@@ -111,7 +111,6 @@ local function collectBarrel()
     if getgenv().autoSell then
         repeat wait() until getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt")
         fireproximityprompt(getTycoon().Essentials["Oil Collector"].Collector:FindFirstChildOfClass("ProximityPrompt"))
-        game:GetService("Workspace").Tycoon.Tycoons.Romeo.Essentials["Oil Collector"].Collector
     end
 end
 
