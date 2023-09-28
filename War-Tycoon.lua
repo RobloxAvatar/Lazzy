@@ -3,12 +3,20 @@ local teams = {}
 getgenv().autoSell = false
 
 local function teleportToFlag(tycoon)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Tycoon.Tycoons[tycoon].Essentials.Flag.Metal.CFrame
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Tycoon.Tycoons[tycoon].Essentials.Flag.Metal.CFrame + Vector3.new(0, -25, 0)
 end
 
 local function getCapturePoint()
     for _,v in pairs(game:GetService("Workspace").Beams:GetChildren()) do
-        if string.find("Capture", v.Name) then
+        if string.find(v.Name, "Capture") then
+            return v
+        end
+    end
+end
+
+local function getOilPath()
+    for _,v in pairs(game:GetService("Workspace").Beams:GetChildren()) do
+        if string.find(v.Name, "Oil") or string.find(v.Name, "Warehouse") then
             return v
         end
     end
@@ -61,7 +69,7 @@ end
 
 local function stealCrate(tycoon)
     teleportToFlag(tycoon)
-    wait(1.1)
+    repeat wait() until getHeliParts(tycoon) ~= nil
     if getHeliParts(tycoon) == nil then
         notify("Lazzy", "No Parts Found!", 3)
     else
@@ -72,7 +80,7 @@ local function stealCrate(tycoon)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = helipart.CFrame + Vector3.new(-2, 0, 0)
         wait(0.1)
         fireproximityprompt(helipart.StealPrompt)
-        wait(helipart.StealPrompt.HoldDuration + 0.3)
+        wait(helipart.StealPrompt.HoldDuration + 0.5)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials.Flag.Metal.CFrame
         wait(0.7)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials["Oil Collector"].CratePromptPart.CFrame + Vector3.new(0, 1, 0)
@@ -80,6 +88,28 @@ local function stealCrate(tycoon)
         if getgenv().autoSell then
             fireproximityprompt(getTycoon().Essentials["Oil Collector"].CratePromptPart.SellPrompt)
         end
+    end
+end
+
+local function collectBarrel()
+    local oilpath = getOilPath()
+    if oilpath == nil or oilpath == "" then
+        oilpath = getOilPath()
+    end
+    if oilpath == nil or oilpath == "" then
+        notify("Lazzy", "No oil barrel found!", 3)
+        return
+    end
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oilpath.CFrame
+    repeat wait() until game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template")
+    local proxprompt = game:GetService("Workspace")["Game Systems"].Warehouses[oilpath.Name]["Oil Capture"]:FindFirstChild("Barrel Template").PromptPart:FindFirstChildOfClass("ProximityPrompt")
+    fireproximityprompt(proxprompt)
+    wait(proxprompt.HoldDuration + 0.5)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials.Flag.Metal.CFrame + Vector3.new(0, -3, 0)
+    wait(0.7)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials["Oil Collector"].Collector.DiamondPlate.CFrame + Vector3.new(0, 1, 0)
+    if getgenv().autoSell then
+        fireproximityprompt(getTycoon().Essentials["Oil Collector"].Collector.dropPrompt)
     end
 end
 
@@ -148,6 +178,13 @@ local StealCrate = Main:CreateButton({
         else
             stealCrate(getgenv().selectedTeam)
         end
+   end,
+})
+
+local CollectBarrel = Main:CreateButton({
+   Name = "Collect Barrel",
+   Callback = function()
+        collectBarrel()
    end,
 })
 
