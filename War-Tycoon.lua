@@ -51,6 +51,7 @@ end
 
 local function stealCrate(tycoon)
     teleportToFlag(tycoon)
+    wait(0.7)
     if getHeliParts(tycoon) == nil then
         notify("Lazzy", "No Parts Found!", 3)
     else
@@ -58,6 +59,8 @@ local function stealCrate(tycoon)
         wait(0.1)
         fireproximityprompt(getHeliParts(tycoon).StealPrompt)
         wait(0.2)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials.Flag.Metal.CFrame
+        wait(0.7)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getTycoon().Essentials["Oil Collector"].CratePromptPart.CFrame + Vector3.new(0, 1, 0)
         wait(0.2)
         fireproximityprompt(getTycoon().Essentials["Oil Collector"].CratePromptPart.SellPrompt)
