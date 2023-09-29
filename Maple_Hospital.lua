@@ -10,13 +10,13 @@ end
 
 local function gen_joke()
     local joke = generate_joke()
-    local decoded_joke = game:GetService("HttpService"):JSONDecode(joke)game:GetService("HttpService"):JSONDecode(joke)
+    local decoded_joke = game:GetService("HttpService"):JSONDecode(joke)
     local joke_len = string.len(decoded_joke["joke"])
 
     repeat 
         wait(0.1)
         joke = generate_joke()
-        decoded_joke = game:GetService("HttpService"):JSONDecode(joke)game:GetService("HttpService"):JSONDecode(joke)
+        decoded_joke = game:GetService("HttpService"):JSONDecode(joke)
     until string.find(joke, "?") and joke_len < 80
 
     return decoded_joke
@@ -94,9 +94,9 @@ local TellJoke = Main:CreateButton({
    Callback = function()
         notify("Lazzy", "telling joke on whiteboard!", 3)
 
-        local joke = gen_joke()
+        local ac_joke = gen_joke()
 
-        local spl = string.split(joke["joke"], "?")
+        local spl = string.split(ac_joke["joke"], "?")
 
         updateWhiteboard(spl[1])
 
