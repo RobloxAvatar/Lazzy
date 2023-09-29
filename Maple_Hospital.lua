@@ -84,6 +84,13 @@ local Main = Window:CreateTab("Main", 13014546637)
 getgenv().waitTime = 2.5
 getgenv().randomJokeLoop = false
 
+local JokesWithPerson = Main:CreateButton({
+   Name = "Introducing yourself about telling jokes",
+   Callback = function()
+        updateWhiteboard("hello im, " .. game.Players.LocalPlayer.Name .. " and im gonna tell some jokes!")
+   end,
+})
+
 local RandomJoke = Main:CreateButton({
    Name = "Random Joke On Board",
    Callback = function()
