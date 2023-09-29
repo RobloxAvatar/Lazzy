@@ -1,25 +1,14 @@
 local h_request = request or http_request or syn.request
 
-local function generate_joke()
+local function random_word()
     local response = h_request({
-        Url = "http://api.apekool.nl/services/jokes/getjoke.php?type=nl",
+        Url = "https://random-word-api.herokuapp.com/word",
         Method = "GET"
     })
-    return response.Body
-end
-
-local function gen_joke()
-    local joke = generate_joke()
-    local decoded_joke = game:GetService("HttpService"):JSONDecode(joke)
-    local joke_len = string.len(decoded_joke["joke"])
-
-    repeat 
-        wait(0.1)
-        joke = generate_joke()
-        decoded_joke = game:GetService("HttpService"):JSONDecode(joke)
-    until string.find(joke, "?") and joke_len < 80
-
-    return decoded_joke
+    split1 = string.split(response.Body, "[")
+    split2 = string.split(split1[2], "]")
+    split3 = string.split(split2[1], '"')
+    return split3[2]
 end
 
 local function getDaycareBoard()
@@ -87,29 +76,29 @@ local Window = Rayfield:CreateWindow({
 
 local Main = Window:CreateTab("Main", 13014546637)
 
-getgenv().waitTime = 8.5
+getgenv().waitTime = 0.25
+getgenv().randomTextLoop = false
 
-local TellJoke = Main:CreateButton({
-   Name = "Tell Joke",
+local TextonBoard = Main:CreateButton({
+   Name = "Random Text On Board",
    Callback = function()
-        notify("Lazzy", "telling joke on whiteboard!", 3)
+        updateWhiteboard(random_word())
+   end,
+})
 
-        local ac_joke = gen_joke()
-
-        local spl = string.split(ac_joke["joke"], "?")
-
-        updateWhiteboard(spl[1])
-
-        wait(getgenv().waitTime)
-
-        updateWhiteboard(spl[2])
+local RandomText = Main:CreateToggle({
+   Name = "Loop Random Text",
+   CurrentValue = false,
+   Flag = "LooprandomText",
+   Callback = function(Value)
+        getgenv().randomTextLoop = Value
    end,
 })
 
 local WaitTime = Main:CreateSlider({
    Name = "Wait Time",
-   Range = {1, 50},
-   Increment = 1,
+   Range = {0.25, 50},
+   Increment = 0.25,
    Suffix = "WaitTime",
    CurrentValue = getgenv().waitTime,
    Flag = "WaitTime",
@@ -117,3 +106,13 @@ local WaitTime = Main:CreateSlider({
         getgenv().waitTime = time
    end,
 })
+
+spawn(function()
+    while task.wait(getgenv().waitTime) do
+        if getgenv().randomTextLoop then
+            pcall(function()
+                updateWhiteboard(random_word())
+            end)
+        end
+    end
+end)
