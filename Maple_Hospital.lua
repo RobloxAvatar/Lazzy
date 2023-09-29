@@ -16,6 +16,36 @@ local function random_joke()
     end
 end
 
+local function choose_random_glitch()
+    local glitch1 = [[
+___oooo___oo______oooo_oooooooo_oo____oo_
+        _oo____oo_oo_______oo_____oo____oo____oo_
+        oo________oo_______oo_____oo____oo____oo_
+        oo____ooo_oo_______oo_____oo____oooooooo_
+        _oo____oo_oo_______oo_____oo____oo____oo_
+        ___oooo___ooooooo_oooo____oo____oo____oo_
+        _________________________________________
+    ]]
+    local glitch2 = [[
+        oOOOo   o      ooOoOOo oOoOOoOOo o      O 
+        .O     o  O          O        o     O      o 
+        o         o          o        o     o      O 
+        O         o          O        O     OoOooOOo 
+        O   oOOo O          o        o     o      O 
+        o.      O O          O        O     O      o 
+        O.    oO o     .    O        O     o      o 
+        OooO  OOoOooO ooOOoOo     o    o      O 
+    ]]
+    local glitch3 = [[
+____ ____ ____ ____ ____ ____ 
+        ||G |||L |||I |||T |||C |||H ||
+        ||__|||__|||__|||__|||__|||__||
+        |/__\|/__\|/__\|/__\|/__\|/__\|
+    ]]
+    local randomchoice = {glitch1, glitch2, glitch3}
+    return randomchoice[math.random(1, 3)]
+end
+
 local function getDaycareBoard()
     for i,v in pairs(workspace:GetChildren()) do
         if v.Name == "Whiteboard" then
@@ -83,6 +113,7 @@ local Main = Window:CreateTab("Main", 13014546637)
 
 getgenv().waitTime = 2.5
 getgenv().randomJokeLoop = false
+getgenv().glitchboardText = false
 
 local JokesWithPerson = Main:CreateButton({
    Name = "Introducing yourself about telling jokes",
@@ -95,6 +126,15 @@ local RandomJoke = Main:CreateButton({
    Name = "Random Joke On Board",
    Callback = function()
         updateWhiteboard(random_joke())
+   end,
+})
+
+local glitchBoard = Main:CreateToggle({
+   Name = "Glitch Board Text",
+   CurrentValue = false,
+   Flag = "glitchBoardText",
+   Callback = function(Value)
+        getgenv().glitchboardText = Value
    end,
 })
 
@@ -124,6 +164,16 @@ spawn(function()
         if getgenv().randomJokeLoop then
             pcall(function()
                 updateWhiteboard(random_joke())
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait(math.random(0.25, 3)) do
+        if getgenv().glitchboardText then
+            pcall(function()
+                updateWhiteboard(choose_random_glitch())
             end)
         end
     end
