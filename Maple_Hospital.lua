@@ -8,6 +8,20 @@ local function generate_joke()
     return response.Body
 end
 
+local function gen_joke()
+    local joke = generate_joke()
+    local decoded_joke = game:GetService("HttpService"):JSONDecode(joke)game:GetService("HttpService"):JSONDecode(joke)
+    local joke_len = string.len(decoded_joke["joke"])
+
+    repeat 
+        wait(0.1)
+        joke = generate_joke()
+        decoded_joke = game:GetService("HttpService"):JSONDecode(joke)game:GetService("HttpService"):JSONDecode(joke)
+    until string.find(joke, "?") and joke_len < 80
+
+    return decoded_joke
+end
+
 local function getDaycareBoard()
     for i,v in pairs(workspace:GetChildren()) do
         if v.Name == "Whiteboard" then
@@ -79,17 +93,10 @@ local TellJoke = Main:CreateButton({
    Name = "Tell Joke",
    Callback = function()
         notify("Lazzy", "telling joke on whiteboard!", 3)
-        local joke = generate_joke()
-        local decoded_joke = game:GetService("HttpService"):JSONDecode(joke)game:GetService("HttpService"):JSONDecode(joke)
-        local joke_len = string.len(decoded_joke["joke"])
 
-        repeat 
-            wait(0.1)
-            joke = generate_joke()
-            decoded_joke = game:GetService("HttpService"):JSONDecode(joke)game:GetService("HttpService"):JSONDecode(joke)
-        until string.find(joke, "?") and joke_len < 80
+        local joke = gen_joke()
 
-        local spl = string.split(decoded_joke["joke"], "?")
+        local spl = string.split(joke["joke"], "?")
 
         updateWhiteboard(spl[1])
 
