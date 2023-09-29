@@ -1,14 +1,19 @@
 local h_request = request or http_request or syn.request
 
-local function random_word()
+local function random_joke()
     local response = h_request({
-        Url = "https://random-word-api.herokuapp.com/word",
-        Method = "GET"
+        Url = "https://api.api-ninjas.com/v1/dadjokes?limit=1",
+        Method = "GET",
+        Headers = {
+            ["X-Api-Key"] = "0yUOXZCHip1vqfAZ0M5FbQ==OwXAq32Zbw8QfGOH"
+        }
     })
-    split1 = string.split(response.Body, "[")
-    split2 = string.split(split1[2], "]")
-    split3 = string.split(split2[1], '"')
-    return split3[2]
+    local decoded_data = game:GetService("HttpService"):JSONDecode(response.Body)
+    for i,v in pairs(decoded_data) do
+        for i2,v2 in pairs(v) do
+            return v2
+        end
+    end
 end
 
 local function getDaycareBoard()
@@ -76,13 +81,13 @@ local Window = Rayfield:CreateWindow({
 
 local Main = Window:CreateTab("Main", 13014546637)
 
-getgenv().waitTime = 0.25
-getgenv().randomTextLoop = false
+getgenv().waitTime = 2.5
+getgenv().randomJokeLoop = false
 
-local TextonBoard = Main:CreateButton({
-   Name = "Random Text On Board",
+local RandomJoke = Main:CreateButton({
+   Name = "Random Joke On Board",
    Callback = function()
-        updateWhiteboard(random_word())
+        updateWhiteboard(random_joke())
    end,
 })
 
@@ -91,13 +96,13 @@ local RandomText = Main:CreateToggle({
    CurrentValue = false,
    Flag = "LooprandomText",
    Callback = function(Value)
-        getgenv().randomTextLoop = Value
+        getgenv().randomJokeLoop = Value
    end,
 })
 
 local WaitTime = Main:CreateSlider({
    Name = "Wait Time",
-   Range = {0.25, 50},
+   Range = {2.5, 50},
    Increment = 0.25,
    Suffix = "WaitTime",
    CurrentValue = getgenv().waitTime,
@@ -109,9 +114,9 @@ local WaitTime = Main:CreateSlider({
 
 spawn(function()
     while task.wait(getgenv().waitTime) do
-        if getgenv().randomTextLoop then
+        if getgenv().randomJokeLoop then
             pcall(function()
-                updateWhiteboard(random_word())
+                updateWhiteboard(random_joke())
             end)
         end
     end
