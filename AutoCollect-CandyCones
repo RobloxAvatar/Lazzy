@@ -1,0 +1,110 @@
+function addUi(part)
+    local partGui = Instance.new("BillboardGui", part)
+    partGui.Size = UDim2.new(1,0,1,0)
+    partGui.AlwaysOnTop = true
+    partGui.Name = "Item-ESP"
+    local frame = Instance.new("Frame", partGui)
+    frame.BackgroundColor3 = Color3.fromRGB(255,80,60)
+    frame.BackgroundTransparency = 0.75
+    frame.Size = UDim2.new(1,0,1,0)
+    frame.BorderSizePixel = 0
+    local nameGui = Instance.new("BillboardGui", part)
+    nameGui.Size = UDim2.new(3,0,1.5,0)
+    nameGui.SizeOffset = Vector2.new(0,1)
+    nameGui.AlwaysOnTop = true
+    nameGui.Name = "CandyCorns"
+    local text = Instance.new("TextLabel", nameGui)
+    text.Text = "Candy Corn"
+    text.TextColor3 = Color3.fromRGB(255,80,60)
+    text.TextTransparency = 0.25
+    text.BackgroundTransparency = 1
+    text.TextScaled = true
+    text.Size = UDim2.new(1,0,1,0)
+    text.Font = Enum.Font.GothamSemibold
+    text.Name = "text"
+end
+
+local PathfindingService = game:GetService("PathfindingService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local path = PathfindingService:CreatePath()
+
+local player = Players.LocalPlayer
+local character = player.Character
+local humanoid = character:WaitForChild("Humanoid")
+
+local waypoints
+local nextWaypointIndex
+local reachedConnection
+local blockedConnection
+
+local function followPath(destination)
+	local success, errorMessage = pcall(function()
+		path:ComputeAsync(character.PrimaryPart.Position, destination)
+	end)
+
+	if success and path.Status == Enum.PathStatus.Success then
+		waypoints = path:GetWaypoints()
+
+		blockedConnection = path.Blocked:Connect(function(blockedWaypointIndex)
+			if blockedWaypointIndex >= nextWaypointIndex then
+				blockedConnection:Disconnect()
+				followPath(destination)
+			end
+		end)
+
+		if not reachedConnection then
+			reachedConnection = humanoid.MoveToFinished:Connect(function(reached)
+				if reached and nextWaypointIndex < #waypoints then
+					nextWaypointIndex += 1
+					humanoid:MoveTo(waypoints[nextWaypointIndex].Position)
+				else
+					reachedConnection:Disconnect()
+					blockedConnection:Disconnect()
+				end
+			end)
+		end
+		nextWaypointIndex = 2
+		humanoid:MoveTo(waypoints[nextWaypointIndex].Position)
+	else
+		warn("Path Computed nil!")
+	end
+end
+
+local function getClosestCorn()
+    local dists = {}
+    local closest
+    for i,v in pairs(game:GetService("Workspace").CandyCorns:GetChildren()) do
+        local dist = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+        table.insert(dists, dist)
+    end
+    for i,v in pairs(game:GetService("Workspace").CandyCorns:GetChildren()) do
+        local min = math.min(table.unpack(dists))
+        local maxDist = 200
+        local dist = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+        if dist == dists[table.find(dists, min)] and dist < maxDist then
+            closest = v
+        end
+    end
+    return closest
+end
+
+getgenv().autoCollect = false
+
+spawn(function()
+    while task.wait() do
+        if getgenv().autoCollect and getClosestCorn() ~= nil then
+            local corn = getClosestCorn()
+            followPath(corn.Position)
+        end
+    end
+end)
+
+for i,v in pairs(game:GetService("Workspace").CandyCorns:GetChildren()) do
+    addUi(v)
+end
+
+game:GetService("Workspace").CandyCorns.ChildAdded:Connect(function(v)
+    addUi(v)
+end)
