@@ -46,7 +46,7 @@ local Window = Rayfield:CreateWindow({
 local Main = Window:CreateTab("Main", 13014546637)
 
 getgenv().autoParry = false
-getgenv().distance = 10
+getgenv().adjustment = 3
 
 local Debug = false
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -65,17 +65,17 @@ local upSpeedToggle = Main:CreateToggle({
    end,
 })
 
-local Slider = Main:CreateSlider({
-   Name = "Auto Parry Distance",
-   Range = {10, 25},
-   Increment = 1,
-   Suffix = "Distance",
-   CurrentValue = 10,
-   Flag = "Distance",
-   Callback = function(distance)
-      getgenv().distance = distance
-   end,
-})
+local Adjustment = Main:CreateSlider({
+    Name = "Auto Parry Adjustment",
+    Range = {3, 4},
+    Increment = 0.1,
+    Suffix = "Adjustment",
+    CurrentValue = 3,
+    Flag = "Adjustment",
+    Callback = function(adjustment)
+       getgenv().adjustment = adjustment
+    end,
+ })
 
 local function print(...)
     if Debug then
@@ -87,6 +87,17 @@ local function VerifyBall(Ball)
     if typeof(Ball) == "Instance" and Ball:IsA("BasePart") and Ball:IsDescendantOf(Balls) and Ball:GetAttribute("realBall") == true then
         return true
     end
+end
+
+function FindBall()
+    local RealBall
+
+    for i, v in pairs(Balls:GetChildren()) do
+        if v:GetAttribute("realBall") == true then
+            RealBall = v
+        end
+    end
+    return RealBall
 end
 
 local function IsTarget()
@@ -102,22 +113,25 @@ Balls.ChildAdded:Connect(function(Ball)
         return
     end
     
-    local OldPosition = Ball.Position
-    local OldTick = tick()
-    
     Ball:GetPropertyChangedSignal("Position"):Connect(function()
         if IsTarget() and getgenv().autoParry then
-            local Distance = (Ball.Position - workspace.CurrentCamera.Focus.Position).Magnitude
-            local Velocity = (OldPosition - Ball.Position).Magnitude
+            local Ball = FindBall()
+            local BallVelocity = Ball.Velocity.Magnitude
+            local BallPosition = Ball.Position
+
+            local PlayerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+
+            local Distance = (BallPosition - PlayerPosition).Magnitude
+            local PingAccountability = BallVelocity * (game.Stats.Network.ServerStatsItem["Data Ping"]:GetValue() / 1000)
+
+            Distance -= PingAccountability
+            Distance -= getgenv().adjustment
+
+            local Hit = Distance / BallVelocity
         
-            if (Distance / Velocity) <= getgenv().distance then
+            if Hit <= 0.5 then
                 Parry()
             end
-        end
-        
-        if (tick() - OldTick >= 1/60) then
-            OldTick = tick()
-            OldPosition = Ball.Position
         end
     end)
 end)
