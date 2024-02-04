@@ -108,6 +108,15 @@ local function Parry()
     Remotes:WaitForChild("ParryButtonPress"):Fire()
 end
 
+getgenv().Clash = false
+
+game:GetService("UserInputService").InputBegan:Connect(function(i, istyping)
+    if istyping == true then return end
+    if i.KeyCode == Enum.KeyCode.Z then
+        getgenv().Clash = not getgenv().Clash
+    end
+end)
+
 Balls.ChildAdded:Connect(function(Ball)
     if not VerifyBall(Ball) then
         return
@@ -134,4 +143,14 @@ Balls.ChildAdded:Connect(function(Ball)
             end
         end
     end)
+end)
+
+spawn(function()
+    while task.wait() do
+        if getgenv().Clash then
+            pcall(function()
+                Parry()
+            end)
+        end
+    end
 end)
